@@ -28,5 +28,5 @@ fga store list
 ## 创建一个新 Store
 
 ```bash
-fga store create --name my-store --
+fga store create --name my-store
 ```
