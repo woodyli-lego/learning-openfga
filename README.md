@@ -46,5 +46,21 @@ fga model write --file model.fga
 fga tuple write --file tuples.yaml
 ```
 
+## 使用 cli 验证
 
+```bash
+# AppAdmin 可以创建 template
+fga query check user:eshop-admin can_create_template app:eshop
 
+# SpaceEditor 不能创建 template
+fga query check user:toy-store-editor can_create_template app:eshop
+
+# SpaceEditor 可以修改 entry
+fga query check user:toy-store-editor can_modify entry:toys-category
+```
+
+## 执行单元测试
+
+```bash
+fga model test --tests tests.yaml
+```

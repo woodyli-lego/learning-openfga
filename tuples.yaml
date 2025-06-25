@@ -1,14 +1,55 @@
 # define spaces and their parent app
-- user: app:app1
+- user: app:eshop
   relation: parent_app
-  object: space:app1-space1
-- user: app:app1
+  object: space:toy-store
+- user: app:eshop
   relation: parent_app
-  object: space:app1-space2
+  object: space:snack-store
+
 # define the reverse relations for app and its child spaces
-- user: space:app1-space1
+- user: space:toy-store
   relation: spaces
-  object: app:app1
-- user: space:app1-space2
+  object: app:eshop
+- user: space:snack-store
   relation: spaces
-  object: app:app1
+  object: app:eshop
+
+# define templates for app
+- user: app:eshop
+  relation: parent_app
+  object: template:category
+- user: app:eshop
+  relation: parent_app
+  object: template:custom-category
+- user: app:eshop#space_editor
+  relation: can_create_entry
+  object: template:custom-category
+
+# define entries for spaces
+- user: space:toy-store
+  relation: parent_space
+  object: entry:toys-category
+- user: space:snack-store
+  relation: parent_space
+  object: entry:snacks-category
+
+# define AppAdmin
+- user: user:eshop-admin
+  relation: admin
+  object: app:eshop
+
+# define SpaceEditor
+- user: user:toy-store-editor
+  relation: editor
+  object: space:toy-store
+- user: user:snack-store-editor
+  relation: editor
+  object: space:snack-store
+
+# define SpaceViewer
+- user: user:toy-store-viewer
+  relation: viewer
+  object: space:toy-store
+- user: user:snack-store-viewer
+  relation: viewer
+  object: space:snack-store

@@ -1,0 +1,109 @@
+name: Unit Tests
+
+model_file: ./model.fga
+tuple_file: ./tuples.yaml
+
+tests:
+  - name: App Admin Permissions
+    check:
+      - user: user:eshop-admin
+        object: app:eshop
+        assertions:
+          admin: true
+          can_create_template: true
+      - user: user:eshop-admin
+        object: space:toy-store
+        assertions:
+          editor: true
+          viewer: true
+          can_upload_asset: true
+      - user: user:eshop-admin
+        object: template:category
+        assertions:
+          can_manage: true
+          can_view: true
+          can_create_entry: true
+      - user: user:eshop-admin
+        object: template:custom-category
+        assertions:
+          can_manage: true
+          can_view: true
+          can_create_entry: true
+      - user: user:eshop-admin
+        object: entry:toys-category
+        assertions:
+          can_modify: true
+          can_view: true
+
+  - name: Space Editor Permissions
+    check:
+      - user: user:toy-store-editor
+        object: app:eshop
+        assertions:
+          admin: false
+          can_create_template: false
+      - user: user:toy-store-editor
+        object: space:toy-store
+        assertions:
+          editor: true
+          viewer: true
+          can_upload_asset: true
+      - user: user:toy-store-editor
+        object: space:snack-store # Cannot access other spaces
+        assertions:
+          editor: false
+          viewer: false
+          can_upload_asset: false
+      - user: user:toy-store-editor
+        object: template:category
+        assertions:
+          can_manage: false
+          can_view: true
+          can_create_entry: false
+      - user: user:toy-store-editor
+        object: template:custom-category
+        assertions:
+          can_manage: false
+          can_view: true
+          can_create_entry: true
+      - user: user:toy-store-editor
+        object: entry:toys-category
+        assertions:
+          can_modify: true
+          can_view: true
+      - user: user:toy-store-editor
+        object: entry:snacks-category # Cannot access entries in other spaces
+        assertions:
+          can_modify: false
+          can_view: false
+
+  - name: Space Viewer Permissions
+    check:
+      - user: user:toy-store-viewer
+        object: app:eshop
+        assertions:
+          admin: false
+          can_create_template: false
+      - user: user:toy-store-viewer
+        object: space:toy-store
+        assertions:
+          editor: false
+          viewer: true
+          can_upload_asset: false
+      - user: user:toy-store-viewer
+        object: template:category
+        assertions:
+          can_manage: false
+          can_view: true
+          can_create_entry: false
+      - user: user:toy-store-viewer
+        object: template:custom-category
+        assertions:
+          can_manage: false
+          can_view: true
+          can_create_entry: false
+      - user: user:toy-store-viewer
+        object: entry:toys-category
+        assertions:
+          can_modify: false
+          can_view: true

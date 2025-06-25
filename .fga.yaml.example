@@ -1,3 +1,4 @@
 api-url: http://localhost:28080
 api-token: 123456
 store-id: <replace_with_store_id>
+model-id: <replace_with_model_id>
