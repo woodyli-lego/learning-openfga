@@ -1,0 +1,57 @@
+model
+  schema 1.1
+
+type user
+
+type app
+  relations
+    # This relation links an app to all the spaces within it.
+    # It's the inverse of the 'parent_app' relation on the 'space' type.
+    # The application layer is responsible for maintaining this inverse relationship.
+    # For every (space:S, parent_app, app:A) tuple, there must be a (app:A, spaces, space:S) tuple.
+    define spaces: [space]
+
+    # user set
+    define admin: [user]
+
+    # computed user set
+    define space_editor: editor from spaces
+    define space_viewer: viewer from spaces
+
+    # permissions
+    define can_create_template: admin
+
+type space
+  relations
+    define parent_app: [app]
+
+    # user set
+    define editor: [user] or admin from parent_app
+    define viewer: [user] or editor
+
+    # computed user set
+    define app_admin: admin from parent_app
+
+    # permissions
+    define can_upload_asset: editor
+
+type template
+  relations
+    define parent_app: [app]
+
+    # permissions
+    define can_manage: admin from parent_app
+    define can_view: can_manage or space_editor from parent_app or space_viewer from parent_app
+    # To allow space editors of the app to create entries for a specific template,
+    # add a tuple like: (template:T, can_create_entry, app:A#space_editor)
+    define can_create_entry: [app#space_editor] or admin from parent_app
+
+type entry
+  relations
+    define parent_space: [space]
+
+    # permissions
+    define can_modify: editor from parent_space
+    define can_view: can_modify or viewer from parent_space
+
+

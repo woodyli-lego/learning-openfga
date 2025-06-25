@@ -1,0 +1,14 @@
+# define spaces and their parent app
+- user: app:app1
+  relation: parent_app
+  object: space:app1-space1
+- user: app:app1
+  relation: parent_app
+  object: space:app1-space2
+# define the reverse relations for app and its child spaces
+- user: space:app1-space1
+  relation: spaces
+  object: app:app1
+- user: space:app1-space2
+  relation: spaces
+  object: app:app1
