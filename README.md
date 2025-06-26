@@ -59,7 +59,7 @@ fga query check user:toy-store-editor can_create_template app:eshop
 fga query check user:toy-store-editor can_modify entry:toys-category
 ```
 
-## 执行单元测试
+## 执行单元测试 (不需要启动 OpenFGA)
 
 ```bash
 fga model test --tests tests.yaml

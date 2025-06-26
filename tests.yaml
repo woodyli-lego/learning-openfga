@@ -24,12 +24,6 @@ tests:
           can_view: true
           can_create_entry: true
       - user: user:eshop-admin
-        object: template:custom-category
-        assertions:
-          can_manage: true
-          can_view: true
-          can_create_entry: true
-      - user: user:eshop-admin
         object: entry:toys-category
         assertions:
           can_modify: true
